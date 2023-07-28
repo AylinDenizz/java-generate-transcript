@@ -1,4 +1,4 @@
-package hw3.main;
+package main;
 
 import main.CourseGrade;
 
@@ -29,6 +29,29 @@ public class Transcript {
         }
     }
 
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
+    }
+
+    public ArrayList<CourseGrade> getCourseGrades() {
+        return courseGrades;
+    }
+
+    public void setCourseGrades(ArrayList<CourseGrade> courseGrades) {
+        this.courseGrades = courseGrades;
+    }
+
+    public double getGPA() {
+        return GPA;
+    }
+
+    public void setGPA(double GPA) {
+        this.GPA = GPA;
+    }
 
     @Override
     public String toString() {

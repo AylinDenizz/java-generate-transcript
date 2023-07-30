@@ -28,11 +28,13 @@ public class Main {
 
         System.out.println(transcript1.toString());
 
-        //GenerateTranscript transcript2 = new GenerateTranscript();
-        //transcript2.takeInputFromFile();
+        GenerateTranscript transcript2 = new GenerateTranscript();
+        transcript2.takeInputFromFile();
 
         GenerateTranscript transcript3 = new GenerateTranscript();
         transcript3.takeInputFromUser();
+
+
 
 
 

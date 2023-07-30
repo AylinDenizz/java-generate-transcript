@@ -4,6 +4,7 @@ import main.CourseGrade;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class GenerateTranscript {
@@ -41,33 +42,43 @@ public class GenerateTranscript {
     }
 
     public void takeInputFromFile() {
-        try {
             System.out.println("Enter a file name: ");
             String fileName = scanner.nextLine();
-            Scanner fileScanner = new Scanner(new File(fileName));
 
-            int studentID = fileScanner.nextInt();
-            fileScanner.nextLine(); // Consume newline character
-            Transcript transcript = new Transcript(studentID);
-
-            while (fileScanner.hasNextLine()) {
-                String department = fileScanner.next();
-                int courseCode = fileScanner.nextInt();
-                int credit = fileScanner.nextInt();
-                double grade = fileScanner.nextDouble();
-                fileScanner.nextLine(); // Consume newline character
-
-                CourseGrade courseGrade = new CourseGrade(department, courseCode, credit);
-                courseGrade.setGradeTaken(grade);
-
-                transcript.addCourseTaken(courseGrade);
+            InputStream inputStream = getClass().getResourceAsStream("/" + fileName);
+            if (inputStream == null) {
+                System.out.println("File not found: " + fileName);
+                return;
             }
 
-            fileScanner.close();
-            System.out.println(transcript);
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: File not found.");
+            int studentId= 0;
+
+            scanner = new Scanner(inputStream);
+
+            if (scanner.hasNextLine()) {
+            studentId = Integer.parseInt(scanner.nextLine());
         }
+
+        Transcript transcript = new main.Transcript(studentId);
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] parts = line.split(" ");
+            if (parts.length != 4) {
+                System.out.println("Invalid line in the file: " + line);
+                continue;
+            }
+            String department = parts[0];
+            int courseCode = Integer.parseInt(parts[1]);
+            int credit = Integer.parseInt(parts[2]);
+            double grade = Double.parseDouble(parts[3]);
+
+            CourseGrade courseGrade = new CourseGrade(department, courseCode, credit, grade);
+            transcript.addCourseTaken(courseGrade);
+        }
+
+        scanner.close();
+            System.out.println(transcript);
+
     }
 }
 
